@@ -14,6 +14,7 @@ function cart(db, printProducts) {
     itemContainer.innerHTML=`<div class="cart_empty">
     <p>no hay items en el carrito</p>
     </div>`
+    botonComprar.disabled = true
   }
   if (cart) {
     carrito = cart
@@ -52,6 +53,7 @@ function cart(db, printProducts) {
         </div>`;
     }
     itemContainer.innerHTML = code;
+    botonComprar.disabled = false
     obtenerTotales();
     if(itemContainer.innerHTML==``) printVacio()
   }
