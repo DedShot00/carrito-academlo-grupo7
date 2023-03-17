@@ -57,6 +57,12 @@ function cart(db, printProducts) {
   }
   function addToCart(idProducto, cantidad = 1) {
     let dbProduct = db.find((elemento) => elemento.id == idProducto);
+    let pro = JSON.parse(localStorage.getItem(`dataBase`))
+    let productoAnalizar = pro.find((elemento) => elemento.id == idProducto);
+    if(productoAnalizar.quantity ==  0) {
+      alert(`Producto agotado, por favor intenta despues`)
+    }else{
+    //else
     let cartItem = {
       id: dbProduct.id,
       image: dbProduct.image,
@@ -68,6 +74,10 @@ function cart(db, printProducts) {
     let buscarInCart = carrito.find((elemento) => elemento.id == idProducto);
      
     if (buscarInCart) {
+      if(buscarInCart.stock==0 || buscarInCart.cantidad == buscarInCart.stock) {
+        alert(`El stock no es suficiente para una compra tan grande`)
+        buscarInCart.cantidad = buscarInCart.cantidad- 1
+      }
       buscarInCart.cantidad += 1;
       prinCart(carrito);
     } else {
@@ -75,6 +85,8 @@ function cart(db, printProducts) {
       prinCart(carrito);
     }
     localStorage.setItem(`cart`, JSON.stringify(carrito));
+    //termina else
+  }
   }
   function removeToCart(idToRemove) {
     carrito = carrito.filter((elemento) => elemento.id != idToRemove);
